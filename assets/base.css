@@ -2,7 +2,7 @@
 
 :root,
 .color-background-1 {
-  --color-foreground: var(--color-base-text);
+  --color-foreground: var(-text-color-base-);
   --color-background: var(--color-base-background-1);
   --gradient-background: var(--gradient-base-background-1);
 }
