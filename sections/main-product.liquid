@@ -1078,6 +1078,24 @@
     </modal-dialog>
   {%- endfor -%}
 
+  {% assign product = product %}
+{% if product.options.size > 1 %}
+  <div class="product-single__meta">
+    {% for option in product.options %}
+      <div class="product-single__option">
+        <h4>{{ option.name }}</h4>
+        <select name="id" class="product-single__option form-control">
+          {% for value in option.values %}
+            <option {% if forloop.first %} selected="selected" {% endif %} value="{{ value | escape }}">{{ value }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+{% comment %} mujeeb ansari end {% endcomment %}
+
+
   {%- if product.media.size > 0 -%}
     <script src="{{ 'product-modal.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'media-gallery.js' | asset_url }}" defer="defer"></script>
