@@ -71,7 +71,9 @@
           <h3 class="card__heading">
             <a{% if card_collection == blank %} role="link" aria-disabled="true"{% else %} href="{{ card_collection.url }}"{% endif %} class="full-unstyled-link">
               {%- if card_collection.title != blank -%}
-                {{- card_collection.title | escape -}}
+
+              Hand Bag
+                {% comment %} {{- card_collection.title | escape -}} {% endcomment %}
               {%- else -%}
                 {{ 'onboarding.collection_title' | t }}
               {%- endif -%}
@@ -92,7 +94,8 @@
           <h3 class="card__heading">
             <a{% if card_collection == blank %} role="link" aria-disabled="true"{% else %} href="{{ card_collection.url }}"{% endif %} class="full-unstyled-link">
               {%- if card_collection.title != blank -%}
-                {{- card_collection.title | escape -}}
+              Hand Bag
+                {% comment %} {{- card_collection.title | escape -}} {% endcomment %}
               {%- else -%}
                 {{ 'onboarding.collection_title' | t }}
               {%- endif -%}
