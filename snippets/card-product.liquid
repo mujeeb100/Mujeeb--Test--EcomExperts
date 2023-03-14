@@ -111,8 +111,7 @@
                 class="full-unstyled-link"
                 aria-labelledby="StandardCardNoMediaLink-{{ section_id }}-{{ card_product.id }} NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
               >
-              Hand Bag
-                {% comment %} {{ card_product.hand | escape }} {% endcomment %}
+                {{ card_product.title | escape }}
               </a>
             </h3>
           </div>
@@ -149,7 +148,7 @@
               class="full-unstyled-link"
               aria-labelledby="CardLink-{{ section_id }}-{{ card_product.id }} Badge-{{ section_id }}-{{ card_product.id }}"
             >
-            Hang Bag
+              {{ card_product.title | escape }}
             </a>
           </h3>
           <div class="card-information">
