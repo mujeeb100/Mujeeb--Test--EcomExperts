@@ -326,9 +326,9 @@
             {%- when 'title' -%}
               <div class="product__title" {{ block.shopify_attributes }}>
                 {% comment %} text changes start  {% endcomment %}
-                <h1> Hand Bag 123</h1>
+                <h1 class="product1__title " {{ block.shopify_attributes }}> Hand Bag </h1>
                 {% comment %} text changes end  {% endcomment %}
-                <a href="{{ product.url }}" class="product__title">
+                <a href="{{ product1.url }}" class="product__title">
                   <h2 class="h1">
                     Hand Bag
                   </h2>
