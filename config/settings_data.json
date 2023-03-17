@@ -135,8 +135,11 @@
             }
           }
         },
-        "block_order": ["announcement-bar-0"],
-        "settings": {}
+        "block_order": [
+          "announcement-bar-0"
+        ],
+        "settings": {
+        }
       },
       "header": {
         "type": "header",
@@ -160,21 +163,31 @@
         "blocks": {
           "footer-0": {
             "type": "link_list",
-            "settings": { "heading": "Quick links", "menu": "footer" }
+            "settings": {
+              "heading": "Quick links",
+              "menu": "footer"
+            }
           },
           "footer-1": {
             "type": "link_list",
-            "settings": { "heading": "Info", "menu": "footer" }
+            "settings": {
+              "heading": "Info",
+              "menu": "footer"
+            }
           },
           "footer-2": {
             "type": "text",
             "settings": {
               "heading": "Our mission",
-              "subtext": "<p>Share contact information, store details, and brand content with your customers.</p>"
+              "subtext": "<p>Share contact information, store details, and brand content with your customers.<\/p>"
             }
           }
         },
-        "block_order": ["footer-0", "footer-1", "footer-2"],
+        "block_order": [
+          "footer-0",
+          "footer-1",
+          "footer-2"
+        ],
         "settings": {
           "color_scheme": "background-1",
           "newsletter_enable": true,
@@ -198,7 +211,9 @@
       },
       "main-password-footer": {
         "type": "main-password-footer",
-        "settings": { "color_scheme": "background-1" }
+        "settings": {
+          "color_scheme": "background-1"
+        }
       }
     }
   },
@@ -339,8 +354,11 @@
               }
             }
           },
-          "block_order": ["announcement-bar-0"],
-          "settings": {}
+          "block_order": [
+            "announcement-bar-0"
+          ],
+          "settings": {
+          }
         },
         "header": {
           "type": "header",
@@ -364,21 +382,31 @@
           "blocks": {
             "footer-0": {
               "type": "link_list",
-              "settings": { "heading": "Quick links", "menu": "footer" }
+              "settings": {
+                "heading": "Quick links",
+                "menu": "footer"
+              }
             },
             "footer-1": {
               "type": "link_list",
-              "settings": { "heading": "Info", "menu": "footer" }
+              "settings": {
+                "heading": "Info",
+                "menu": "footer"
+              }
             },
             "footer-2": {
               "type": "text",
               "settings": {
                 "heading": "Our mission",
-                "subtext": "<p>Share contact information, store details, and brand content with your customers.</p>"
+                "subtext": "<p>Share contact information, store details, and brand content with your customers.<\/p>"
               }
             }
           },
-          "block_order": ["footer-0", "footer-1", "footer-2"],
+          "block_order": [
+            "footer-0",
+            "footer-1",
+            "footer-2"
+          ],
           "settings": {
             "color_scheme": "background-1",
             "newsletter_enable": true,
@@ -402,7 +430,9 @@
         },
         "main-password-footer": {
           "type": "main-password-footer",
-          "settings": { "color_scheme": "background-1" }
+          "settings": {
+            "color_scheme": "background-1"
+          }
         }
       }
     }
