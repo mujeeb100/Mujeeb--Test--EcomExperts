@@ -1,0 +1,88 @@
+{% comment %}
+Renders product variant options
+
+Accepts:
+- product: {Object} product object.
+- option: {Object} current product_option object.
+- block: {Object} block object.
+
+
+Usage:
+{% render 'product-variant-options',
+product: product,
+option: option,
+block: block
+%}
+{% endcomment %}
+{%- liquid
+  assign variants_available_arr = product.variants | map: 'available'
+  assign variants_option1_arr = product.variants | map: 'option1'
+  assign variants_option2_arr = product.variants | map: 'option2'
+  assign variants_option3_arr = product.variants | map: 'option3'
+
+  assign product_form_id = 'product-form-' | append: section.id
+-%}
+
+
+
+<div class="custom-dropdown">
+  <div class="dropdown-header">
+    <span>Unselected</span>
+
+    <i class="fas fa-angle-down"></i>
+  </div>
+  <div class="dropdown-list">
+    {%- for value in option.values -%}
+
+
+      <div class="dropdown-item">
+
+        <input
+          type="radio"
+          id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+          name="{{ option.name }}"
+          value="{{ value | escape }}"
+          form="{{ product_form_id }}"
+          {% if option.selected_value == value %}checked{% endif %}
+          {% if option_disabled %}class="disabled"{% endif %}>
+        <label class="custom-button-size" for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+          {{ value -}}
+          {% comment %} <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span> {% endcomment %}
+        </label>
+
+
+
+      </div>
+
+
+
+    {%- endfor -%}
+  </div>
+</div>
+<script>
+  // Get the dropdown header and list
+  const dropdownHeader = document.querySelector(".dropdown-header");
+  const dropdownList = document.querySelector(".dropdown-list");
+
+// Toggle the dropdown list when the header is clicked
+  dropdownHeader.addEventListener("click", function() {
+
+    dropdownList.classList.toggle("show");
+  });
+
+// Set the selected value when a dropdown item is clicked
+  const dropdownItems = document.querySelectorAll(".dropdown-item");
+  for (let i = 0; i < dropdownItems.length; i++) {
+    dropdownItems[i].addEventListener("click", function() {
+      dropdownHeader.querySelector("span").textContent = this.textContent;
+      dropdownList.classList.remove("show");
+    });
+  }
+
+// Hide the dropdown list when the user clicks outside of it
+  document.addEventListener("click", function(event) {
+    if (! dropdownHeader.contains(event.target) && ! dropdownList.contains(event.target)) {
+      dropdownList.classList.remove("show");
+    }
+  });
+</script>
