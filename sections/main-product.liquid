@@ -257,7 +257,6 @@
             </div>
             {%- when 'quantity_selector' -%}
               <div
-<<<<<<< HEAD
               id="Quantity-Form-{{ section.id }}"
               class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
               {{ block.shopify_attributes }}>
@@ -340,7 +339,6 @@
                 {% # theme-check-disable %}
                 {%- assign cart_qty = cart | item_count_for_variant: product.selected_or_first_available_variant.id -%}
                 {% # theme-check-enable %}
-<<<<<<< HEAD
                 <label class="quantity__label form__label" for="Quantity-{{ section.id }}">
                   {{ 'products.product.quantity.label' | t }}
                   <span class="quantity__rules-cart no-js-hidden{% if cart_qty == 0 %} hidden{% endif %}">
@@ -360,7 +358,6 @@
                     <span>({{- 'products.product.quantity.in_cart_html' | t: quantity: cart_qty -}})</span>
                   </span>
                 </label>
-=======
                {% if product.variants[forloop.index0].metafields.color.values and option.name == 'Color' %}
                 <label for="{{ section.id }}-{{ option.name }}-{{ forloop.index0 }}" style="background-color: {{product.variants[forloop.index0].metafields.color.values}}">
                   &nbsp;
@@ -370,7 +367,6 @@
                   {{ value }}
                 </label>
               {% endif %} 
->>>>>>> 51df1850abaaad967bb3152f4eb370c4b1b81498
                 <quantity-input class="quantity">
                   <button class="quantity__button no-js-hidden" name="minus" type="button">
                     <span class="visually-hidden">
@@ -492,7 +488,6 @@
                     {{ 'accessibility.total_reviews' | t -}}
                   </span>
                 </p>
->>>>>>> 73c4cd32a9d87fa0bf5018669a923e780aea824d
               {%- endif -%}
               {%- if product.selected_or_first_available_variant.quantity_rule.min > 1 -%}
                 <span class="divider">
