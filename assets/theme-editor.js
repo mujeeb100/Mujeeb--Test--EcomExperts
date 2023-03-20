@@ -1,4 +1,10 @@
+function hideProductModal() {
+  const productModal = document.querySelectorAll('product-modal[open]');
+  productModal && productModal.forEach(modal => modal.hide());
+}
+
 document.addEventListener('shopify:block:select', function(event) {
+  hideProductModal();
   const blockSelectedIsSlide = event.target.classList.contains('slideshow__slide');
   if (!blockSelectedIsSlide) return;
 
@@ -19,21 +25,23 @@ document.addEventListener('shopify:block:deselect', function(event) {
   if (parentSlideshowComponent.autoplayButtonIsSetToPlay) parentSlideshowComponent.play();
 });
 
-// mujeeb stat here 
-// Get all the product images
-var productImages = document.querySelectorAll('.product-single__media-item');
-
-// Listen for a change in the variant selector
-document.querySelector('.product-single__meta select').addEventListener('change', function(event) {
-  var selectedVariant = event.target.value.toLowerCase();
-  
-  // Loop through all the images and hide the ones that don't match the selected variant
-  productImages.forEach(function(image) {
-    if (image.dataset.variant === selectedVariant) {
-      image.style.display = 'block';
-    } else {
-      image.style.display = 'none';
-    }
-  });
+document.addEventListener('shopify:section:load', () => {
+  hideProductModal();
+  const zoomOnHoverScript = document.querySelector('[id^=EnableZoomOnHover]');
+  if (!zoomOnHoverScript) return;
+  if (zoomOnHoverScript) {
+    const newScriptTag = document.createElement('script');
+    newScriptTag.src = zoomOnHoverScript.src;
+    zoomOnHoverScript.parentNode.replaceChild(newScriptTag, zoomOnHoverScript);
+  }
 });
-// mujeeb end here
+
+document.addEventListener('shopify:section:reorder', () => hideProductModal());
+
+document.addEventListener('shopify:section:select', () => hideProductModal());
+
+document.addEventListener('shopify:section:deselect', () => hideProductModal());
+
+document.addEventListener('shopify:inspector:activate', () => hideProductModal());
+
+document.addEventListener('shopify:inspector:deactivate', () => hideProductModal());

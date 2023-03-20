@@ -257,6 +257,7 @@
             </div>
             {%- when 'quantity_selector' -%}
               <div
+<<<<<<< HEAD
               id="Quantity-Form-{{ section.id }}"
               class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
               {{ block.shopify_attributes }}>
@@ -330,6 +331,168 @@
                       'products.product.quantity.multiples_of'
                     | t: quantity: product.selected_or_first_available_variant.quantity_rule.increment -}}
                 </span>
+=======
+                id="Quantity-Form-{{ section.id }}"
+                class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                {% comment %} TODO: enable theme-check once `item_count_for_variant` is accepted as valid filter {% endcomment %}
+                {% # theme-check-disable %}
+                {%- assign cart_qty = cart | item_count_for_variant: product.selected_or_first_available_variant.id -%}
+                {% # theme-check-enable %}
+<<<<<<< HEAD
+                <label class="quantity__label form__label" for="Quantity-{{ section.id }}">
+                  {{ 'products.product.quantity.label' | t }}
+                  <span class="quantity__rules-cart no-js-hidden{% if cart_qty == 0 %} hidden{% endif %}">
+                    <span class="loading-overlay hidden">
+                      <span class="loading-overlay__spinner">
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          class="spinner"
+                          viewBox="0 0 66 66"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                        </svg>
+                      </span>
+                    </span>
+                    <span>({{- 'products.product.quantity.in_cart_html' | t: quantity: cart_qty -}})</span>
+                  </span>
+                </label>
+=======
+               {% if product.variants[forloop.index0].metafields.color.values and option.name == 'Color' %}
+                <label for="{{ section.id }}-{{ option.name }}-{{ forloop.index0 }}" style="background-color: {{product.variants[forloop.index0].metafields.color.values}}">
+                  &nbsp;
+                </label>
+              {% else %}
+                <label for="{{ section.id }}-{{ option.name }}-{{ forloop.index0 }}">
+                  {{ value }}
+                </label>
+              {% endif %} 
+>>>>>>> 51df1850abaaad967bb3152f4eb370c4b1b81498
+                <quantity-input class="quantity">
+                  <button class="quantity__button no-js-hidden" name="minus" type="button">
+                    <span class="visually-hidden">
+                      {{- 'products.product.quantity.decrease' | t: product: product.title | escape -}}
+                    </span>
+                    {% render 'icon-minus' %}
+                  </button>
+                  <input
+                    class="quantity__input"
+                    type="number"
+                    name="quantity"
+                    id="Quantity-{{ section.id }}"
+                    data-cart-quantity="{{ cart_qty }}"
+                    data-min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+                    min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+                    {% if product.selected_or_first_available_variant.quantity_rule.max != null %}
+                      data-max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
+                      max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
+                    {% endif %}
+                    step="{{ product.selected_or_first_available_variant.quantity_rule.increment }}"
+                    value="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+                    form="{{ product_form_id }}"
+                  />
+                  <button class="quantity__button no-js-hidden" name="plus" type="button">
+                    <span class="visually-hidden">
+                      {{- 'products.product.quantity.increase' | t: product: product.title | escape -}}
+                    </span>
+                    {% render 'icon-plus' %}
+                  </button>
+                </quantity-input>
+                <div class="quantity__rules caption no-js-hidden">
+                  {%- if product.selected_or_first_available_variant.quantity_rule.increment > 1 -%}
+                    <span class="divider">
+                      {{-
+                        'products.product.quantity.multiples_of'
+                        | t: quantity: product.selected_or_first_available_variant.quantity_rule.increment
+                      -}}
+                    </span>
+                  {%- endif -%}
+                  {%- if product.selected_or_first_available_variant.quantity_rule.min > 1 -%}
+                    <span class="divider">
+                      {{-
+                        'products.product.quantity.minimum_of'
+                        | t: quantity: product.selected_or_first_available_variant.quantity_rule.min
+                      -}}
+                    </span>
+                  {%- endif -%}
+                  {%- if product.selected_or_first_available_variant.quantity_rule.max != null -%}
+                    <span class="divider">
+                      {{-
+                        'products.product.quantity.maximum_of'
+                        | t: quantity: product.selected_or_first_available_variant.quantity_rule.max
+                      -}}
+                    </span>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- when 'popup' -%}
+              <modal-opener
+                class="product-popup-modal__opener no-js-hidden quick-add-hidden"
+                data-modal="#PopupModal-{{ block.id }}"
+                {{ block.shopify_attributes }}
+              >
+                <button
+                  id="ProductPopup-{{ block.id }}"
+                  class="product-popup-modal__button link"
+                  type="button"
+                  aria-haspopup="dialog"
+                >
+                  {{ block.settings.text | default: block.settings.page.title }}
+                </button>
+              </modal-opener>
+              <a href="{{ block.settings.page.url }}" class="product-popup-modal__button link no-js">
+                {{- block.settings.text -}}
+              </a>
+            {%- when 'share' -%}
+              {% assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin %}
+              {% render 'share-button',
+                block: block,
+                share_link: share_url
+              %}
+
+            {%- when 'variant_picker' -%}
+              {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
+            {%- when 'buy_buttons' -%}
+              {%- render 'buy-buttons', block: block, product: product, product_form_id: product_form_id, section_id: section.id, show_pickup_availability: true -%}
+            {%- when 'rating' -%}
+              {%- if product.metafields.reviews.rating.value != blank -%}
+                {% liquid
+                  assign rating_decimal = 0
+                  assign decimal = product.metafields.reviews.rating.value.rating | modulo: 1
+                  if decimal >= 0.3 and decimal <= 0.7
+                    assign rating_decimal = 0.5
+                  elsif decimal > 0.7
+                    assign rating_decimal = 1
+                  endif
+                %}
+                <div
+                  class="rating"
+                  role="img"
+                  aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: product.metafields.reviews.rating.value, rating_max: product.metafields.reviews.rating.value.scale_max }}"
+                >
+                  <span
+                    aria-hidden="true"
+                    class="rating-star color-icon-{{ settings.accent_icons }}"
+                    style="--rating: {{ product.metafields.reviews.rating.value.rating | floor }}; --rating-max: {{ product.metafields.reviews.rating.value.scale_max }}; --rating-decimal: {{ rating_decimal }};"
+                  ></span>
+                </div>
+                <p class="rating-text caption">
+                  <span aria-hidden="true">
+                    {{- product.metafields.reviews.rating.value }} /
+                    {{ product.metafields.reviews.rating.value.scale_max -}}
+                  </span>
+                </p>
+                <p class="rating-count caption">
+                  <span aria-hidden="true">({{ product.metafields.reviews.rating_count }})</span>
+                  <span class="visually-hidden">
+                    {{- product.metafields.reviews.rating_count }}
+                    {{ 'accessibility.total_reviews' | t -}}
+                  </span>
+                </p>
+>>>>>>> 73c4cd32a9d87fa0bf5018669a923e780aea824d
               {%- endif -%}
               {%- if product.selected_or_first_available_variant.quantity_rule.min > 1 -%}
                 <span class="divider">
