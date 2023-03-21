@@ -1,51 +1,65 @@
+{% comment %} developement by mujeeb ecomexperts {% endcomment %}
 {%- unless product.has_only_default_variant -%}
-    <variant-radios class="no-js-hidden" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
-        {%- for option in product.options_with_values -%}
-            <fieldset class="js product-form__input">
-            <legend class="form__label">{{ option.name }}</legend>
-            {%- for value in option.values -%}
-                <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                    name="{{ option.name }}"
-                    value="{{ value | escape }}"
-                    form="{{ product_form_id }}"
-                    {% if option.selected_value == value %}checked{% endif %}
-                >
-                {% if option.name == "Color" %}
-                <label style = "border-radius: 0 !important; height: 40px; width: 40px; background-color: {{ value }}"class="color-label" for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-                </label>
-                {% else %}
-                <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-                {{ value }}
-                </label>
-                {% endif %}
-            {%- endfor -%}
-            </fieldset>
+  <variant-radios
+    class="no-js-hidden"
+    data-section="{{ section.id }}"
+    data-url="{{ product.url }}"
+    {{ block.shopify_attributes }}>
+    {%- for option in product.options_with_values -%}
+      <fieldset class="js product-form__input">
+        <legend class="form__label">{{ option.name }}</legend>
+        {%- for value in option.values -%}
+          <input
+            type="radio"
+            id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+            name="{{ option.name }}"
+            value="{{ value | escape }}"
+            form="{{ product_form_id }}"
+            {% if option.selected_value == value %}checked{% endif %}>
+          {% if option.name == "Color" %}
+            <label
+              style="border-radius: 0 !important; height: 40px; width: 40px; background-color: {{ value }}"
+              class="color-label"
+              for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"></label>
+          {% else %}
+            <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+              {{ value }}
+            </label>
+          {% endif %}
         {%- endfor -%}
-        <script type="application/json">
-        {{ product.variants | json }}
-        </script>
-    </variant-radios>
-    {%- else -%}
+      </fieldset>
+    {%- endfor -%}
+    <script type="application/json">
+      {{ product.variants | json }}
+    </script>
+  </variant-radios>
+{%- else -%}
 
   <variant-selects
     class="no-js-hidden"
     data-section="{{ section.id }}"
     data-url="{{ product.url }}"
-    {{ block.shopify_attributes }}
-  >
+    {{ block.shopify_attributes }}>
     {%- for option in product.options_with_values -%}
       <div class="product-form__input product-form__input--dropdown {% if forloop.first %}hidden{% endif %}">
         <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
           {{ option.name }}
         </label>
         <div class="select">
-          <select name="id" id="ProductSelect-{{ section.id }}" class="product-form__input product-form__input--select" data-section="{{ section.id }}">
-  {% for variant in product.variants %}
-    <option {% if variant == current_variant %}selected="selected"{% endif %} value="{{ variant.id }}" {% unless variant.available %}disabled="disabled"{% endunless %}>
-      {% if variant.available %}{{ variant.title }} - {{ variant.price | money }}{% else %}{{ variant.title }} - {{ 'products.product.sold_out' | t }}{% endif %}
-    </option>
-  {% endfor %}
-</select>
+          <select
+            name="id"
+            id="ProductSelect-{{ section.id }}"
+            class="product-form__input product-form__input--select"
+            data-section="{{ section.id }}">
+            {% for variant in product.variants %}
+              <option {% if variant == current_variant %}selected="selected"{% endif %}value="{{ variant.id }}"{% unless variant.available %}disabled="disabled"{% endunless %}>
+                {% if variant.available %}
+                  {{ variant.title }} - {{ variant.price | money }}
+                {% else %}
+                  {{ variant.title }} - {{ 'products.product.sold_out' | t }}{% endif %}
+              </option>
+            {% endfor %}
+          </select>
 
           {% render 'icon-caret' %}
         </div>
@@ -62,19 +76,17 @@
   <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
     <label class="form__label" for="Variants-{{ section.id }}">{{ 'products.product.product_variants' | t }}</label>
     <div class="select">
-      <select name="id" id="Variants-{{ section.id }}" class="select__select" form="{{ product_form_id }}">
+
+      <select
+        name="id"
+        id="Variants-{{ section.id }}"
+        class="select__select"
+        form="{{ product_form_id }}">
         {%- for variant in product.variants -%}
-          <option
-            {% if variant == product.selected_or_first_available_variant %}
-              selected="selected"
-            {% endif %}
-            {% if variant.available == false %}
-              disabled
-            {% endif %}
-            value="{{ variant.id }}"
-          >
+          <option {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}{% if variant.available == false %}disabled{% endif %} value="{{ variant.id }}">
             {{ variant.title }}
-            {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
+            {%- if variant.available == false %}
+              - {{ 'products.product.sold_out' | t }}{% endif %}
             - {{ variant.price | money | strip_html }}
           </option>
         {%- endfor -%}
